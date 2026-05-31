@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>퍼피메모리 — 포토굿즈 시안 제작</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="app-header" id="appHeader">
+    <div class="header-inner">
+      <button class="btn-back invisible" id="btnBack" aria-label="뒤로가기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <div class="logo" id="logoBtn">
+        <span class="logo-paw">✦</span>
+        <span class="logo-text">퍼피메모리</span>
+      </div>
+      <button class="btn-admin" id="btnAdminMode" aria-label="관리자">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M20 21a8 8 0 10-16 0"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="step-indicator" id="stepIndicator">
+      <div class="step-bar"><div class="step-fill" id="stepFill"></div></div>
+      <span class="step-label" id="stepLabel"></span>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main-content">
+
+    <!-- ============= SCREEN: HOME ============= -->
+    <section class="screen active" id="screenHome">
+      <div class="home-hero">
+        <div class="hero-badge">✨ 세상에 하나뿐인 포토굿즈</div>
+        <h1 class="hero-title">사람도, 반려동물도<br/><em>오래 간직하고 싶은<br/>순간을 굿즈로.</em></h1>
+        <p class="hero-desc">소중한 사진 한 장을<br/>포토자석과 액자로 남겨보세요</p>
+      </div>
+
+      <!-- 상품 미리보기 카드 -->
+      <div class="product-preview-row">
+        <div class="product-preview-card">
+          <div class="pp-icon">🧲</div>
+          <div class="pp-label">포토자석</div>
+          <div class="pp-sizes">45mm · 90mm · 원형</div>
+        </div>
+        <div class="product-preview-card">
+          <div class="pp-icon">🖼️</div>
+          <div class="pp-label">액자</div>
+          <div class="pp-sizes">90mm ~ 270mm</div>
+        </div>
+      </div>
+
+      <!-- 제작 방식 선택 -->
+      <div class="method-section">
+        <h2 class="section-title">제작 방식을 선택해주세요</h2>
+        <div class="method-cards">
+          <button class="method-card active-card" id="btnDIY">
+            <div class="method-icon">🎨</div>
+            <div class="method-content">
+              <div class="method-label">직접 시안 만들기</div>
+              <div class="method-desc">상품·스타일을 고르고<br/>실시간으로 미리보기를 확인</div>
+            </div>
+            <div class="method-badge">추천</div>
+          </button>
+          <button class="method-card" id="btnDelegate">
+            <div class="method-icon">📸</div>
+            <div class="method-content">
+              <div class="method-label">사진만 보내고 맡기기</div>
+              <div class="method-desc">직접 만들기 어렵다면 사진과<br/>요청사항만 보내주세요</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-primary full-width" id="btnStartOrder">
+        시안 제작 시작하기
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </section>
+
+    <!-- ============= SCREEN: STEP1 - 상품 선택 ============= -->
+    <section class="screen" id="screenStep1">
+      <div class="step-header">
+        <h2 class="step-title">상품을 선택해주세요</h2>
+        <p class="step-desc">원하는 카테고리와 사이즈를 골라주세요</p>
+      </div>
+
+      <!-- 카테고리 탭 -->
+      <div class="cat-tabs" id="productCatTabs">
+        <button class="cat-tab active" data-cat="포토자석">🧲 포토자석</button>
+        <button class="cat-tab" data-cat="액자">🖼️ 액자</button>
+      </div>
+
+      <!-- 상품 목록 -->
+      <div class="product-grid" id="productGrid"></div>
+
+      <button class="btn-primary full-width" id="btnStep1Next">
+        다음 — 사진 업로드
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </section>
+
+    <!-- ============= SCREEN: STEP2 - 사진 업로드 ============= -->
+    <section class="screen" id="screenStep2">
+      <div class="step-header">
+        <h2 class="step-title">사진을 업로드해주세요</h2>
+        <p class="step-desc">JPG 또는 PNG 파일을 선택해주세요</p>
+      </div>
+
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="photoInput" accept="image/jpeg,image/png" class="file-input" />
+        <div class="upload-placeholder" id="uploadPlaceholder">
+          <div class="upload-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </div>
+          <p class="upload-text">탭하여 사진 선택</p>
+          <p class="upload-hint">JPG · PNG 지원 · 사람 및 반려동물 모두 가능</p>
+        </div>
+        <div class="upload-preview hidden" id="uploadPreview">
+          <img id="previewImg" src="" alt="미리보기" />
+          <button class="btn-change-photo" id="btnChangePhoto">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            사진 변경
+          </button>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-icon">💡</div>
+        <p class="tip-text">얼굴이 선명하게 나온 고화질 사진을 권장합니다. 사람·반려동물·가족·커플 사진 모두 가능해요.</p>
+      </div>
+
+      <button class="btn-primary full-width" id="btnStep2Next">
+        다음 — 스타일 선택
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </section>
+
+    <!-- ============= SCREEN: STEP3 - 스타일 선택 ============= -->
+    <section class="screen" id="screenStep3">
+      <div class="step-header">
+        <h2 class="step-title">스타일을 선택해주세요</h2>
+        <p class="step-desc">원하는 느낌의 스타일을 골라주세요</p>
+      </div>
+
+      <div class="style-notice">
+        <span class="style-notice-icon">🎨</span>
+        <p>스타일은 제작 시 참고용으로 사용됩니다. 현재 단계에서는 원본 사진을 기반으로 시안이 생성됩니다.</p>
+      </div>
+
+      <!-- 스타일 카테고리 탭 -->
+      <div class="style-cat-tabs" id="styleCatTabs"></div>
+
+      <!-- 스타일 카드 목록 -->
+      <div class="style-grid" id="styleGrid"></div>
+
+      <button class="btn-primary full-width" id="btnStep3Next">
+        다음 — 정보 입력
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </section>
+
+    <!-- ============= SCREEN: STEP4 - 정보 입력 ============= -->
+    <section class="screen" id="screenStep4">
+      <div class="step-header">
+        <h2 class="step-title">내용을 입력해주세요</h2>
+        <p class="step-desc" id="step4Desc">굿즈에 들어갈 내용을 작성해주세요</p>
+      </div>
+
+      <div class="form-section">
+        <!-- 이름 -->
+        <div class="form-group">
+          <label class="form-label">이름 <span class="required-mark">*</span></label>
+          <div class="input-wrapper">
+            <input type="text" id="inputName" class="form-input" placeholder="예: 보리, 민준, Mom" maxlength="12" />
+            <span class="char-count" id="nameCount">0/12</span>
+          </div>
+          <div class="field-error hidden" id="nameError"></div>
+        </div>
+
+        <!-- 날짜 -->
+        <div class="form-group">
+          <label class="form-label">날짜 <span class="optional-mark">(선택)</span></label>
+          <div class="input-wrapper">
+            <input type="text" id="inputDate" class="form-input" placeholder="YYYY.MM.DD" maxlength="10" />
+          </div>
+          <div class="field-error hidden" id="dateError">날짜 형식이 올바르지 않습니다 (예: 2024.03.15)</div>
+          <p class="field-hint">생일, 기념일, 입양일 등 특별한 날을 입력해보세요</p>
+        </div>
+
+        <!-- 문구 -->
+        <div class="form-group">
+          <label class="form-label">짧은 문구 <span class="optional-mark">(선택)</span></label>
+          <div class="input-wrapper">
+            <textarea id="inputMessage" class="form-textarea" placeholder="예: 언제나 함께해서 고마워&#10;사랑해, 보리야" rows="2" maxlength="40"></textarea>
+            <span class="char-count textarea-count" id="msgCount">0/40</span>
+          </div>
+          <div class="field-error hidden" id="msgError"></div>
+          <p class="field-hint" id="msgHint">최대 2줄, 줄당 14자 이하</p>
+        </div>
+
+        <!-- 배경 색상 -->
+        <div class="form-group">
+          <label class="form-label">배경 색상</label>
+          <div class="color-palette" id="colorPalette">
+            <button class="color-chip active" data-color="#FAF7F0" data-name="크림" style="background:#FAF7F0;" aria-label="크림"><span class="color-name">크림</span></button>
+            <button class="color-chip" data-color="#FFE8F0" data-name="베이비핑크" style="background:#FFE8F0;" aria-label="베이비핑크"><span class="color-name">베이비핑크</span></button>
+            <button class="color-chip" data-color="#E8F8F5" data-name="민트" style="background:#E8F8F5;" aria-label="민트"><span class="color-name">민트</span></button>
+            <button class="color-chip" data-color="#E8F4FC" data-name="하늘" style="background:#E8F4FC;" aria-label="하늘"><span class="color-name">하늘</span></button>
+            <button class="color-chip" data-color="#F5EFE6" data-name="베이지" style="background:#F5EFE6;" aria-label="베이지"><span class="color-name">베이지</span></button>
+            <button class="color-chip" data-color="#EDEDED" data-name="실버" style="background:#EDEDED;" aria-label="실버"><span class="color-name">실버</span></button>
+          </div>
+        </div>
+
+        <!-- 추가 요청사항 -->
+        <div class="form-group">
+          <label class="form-label">추가 요청사항 <span class="optional-mark">(선택)</span></label>
+          <div class="input-wrapper">
+            <textarea id="inputRequest" class="form-textarea" placeholder="디자이너에게 전달할 요청사항을 자유롭게 적어주세요" rows="3" maxlength="100"></textarea>
+            <span class="char-count textarea-count" id="reqCount">0/100</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary full-width" id="btnStep4Next">
+        미리보기 확인
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </section>
+
+    <!-- ============= SCREEN: STEP5 - 미리보기 & 제출 ============= -->
+    <section class="screen" id="screenStep5">
+      <div class="step-header">
+        <h2 class="step-title">시안을 확인해주세요</h2>
+        <p class="step-desc">내용을 최종 확인하고 제작 신청해주세요</p>
+      </div>
+
+      <!-- Canvas 미리보기 -->
+      <div class="canvas-outer" id="canvasOuter">
+        <canvas id="previewCanvas"></canvas>
+      </div>
+
+      <div class="canvas-controls">
+        <button class="btn-toggle-guide" id="btnToggleGuide">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+          안전영역 가이드 ON
+        </button>
+        <button class="btn-download" id="btnDownload">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          PNG 저장
+        </button>
+      </div>
+
+      <!-- 요약 카드 -->
+      <div class="summary-card">
+        <h3 class="summary-title">입력 내용 확인</h3>
+        <div class="summary-list" id="summaryList"></div>
+        <button class="btn-edit" id="btnEditInfo">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          내용 수정하기
+        </button>
+      </div>
+
+      <!-- 저작권/이용 안내 -->
+      <div class="copyright-notice">
+        <p>본 서비스는 고객이 제공한 사진을 기반으로 제작되는 맞춤형 포토굿즈입니다. 업로드한 사진은 고객이 사용 권한을 보유한 이미지여야 하며, 타인의 저작물·유명 캐릭터·브랜드 로고·유명인 이미지는 제작이 제한될 수 있습니다.</p>
+      </div>
+
+      <!-- 제작 전 확인 체크박스 -->
+      <div class="checklist-section">
+        <h3 class="checklist-title">제작 전 확인사항</h3>
+        <div class="checklist">
+          <label class="check-item">
+            <input type="checkbox" class="order-check" id="check1" />
+            <span class="check-box"></span>
+            <span class="check-text">업로드한 사진은 본인이 촬영했거나 제작 의뢰에 사용할 권한이 있는 사진입니다</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="order-check" id="check2" />
+            <span class="check-box"></span>
+            <span class="check-text">사람 사진이 포함된 경우, 사진 속 인물의 제작 및 상업적 이용 동의를 받았습니다</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="order-check" id="check3" />
+            <span class="check-box"></span>
+            <span class="check-text">유명인, 캐릭터, 브랜드 로고, 타인의 저작물이 포함된 이미지는 제작이 제한될 수 있음을 확인했습니다</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="order-check" id="check4" />
+            <span class="check-box"></span>
+            <span class="check-text">AI 스타일 변환 선택 시 얼굴·색감·배경이 원본과 일부 다르게 표현될 수 있음을 확인했습니다</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="order-check" id="check5" />
+            <span class="check-box"></span>
+            <span class="check-text">화면과 실제 제작물의 색상이 다를 수 있음을 확인했습니다</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" class="order-check" id="check6" />
+            <span class="check-box"></span>
+            <span class="check-text">이름, 날짜, 문구를 최종 확인했습니다</span>
+          </label>
+          <label class="check-item check-all">
+            <input type="checkbox" id="checkAll" />
+            <span class="check-box check-box-all"></span>
+            <span class="check-text">위 사항을 모두 확인했습니다</span>
+          </label>
+        </div>
+      </div>
+
+      <button class="btn-primary full-width btn-submit" id="btnSubmit">
+        🎁 제작 신청하기
+      </button>
+    </section>
+
+    <!-- ============= SCREEN: DELEGATE - 맡기기 ============= -->
+    <section class="screen" id="screenDelegate">
+      <div class="step-header">
+        <h2 class="step-title">사진과 요청사항을 보내주세요</h2>
+        <p class="step-desc">디자이너가 사진과 문구를 확인해 시안을 제작해드립니다</p>
+      </div>
+
+      <!-- 상품 선택 (맡기기) -->
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">상품 선택 <span class="required-mark">*</span></label>
+          <select id="delegateProduct" class="form-input form-select">
+            <option value="">상품을 선택해주세요</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="upload-area small" id="uploadAreaDelegate">
+        <input type="file" id="photoInputDelegate" accept="image/jpeg,image/png" class="file-input" />
+        <div class="upload-placeholder" id="uploadPlaceholderDelegate">
+          <div class="upload-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </div>
+          <p class="upload-text">사진 업로드</p>
+          <p class="upload-hint">사람·반려동물·가족·커플 모두 가능</p>
+        </div>
+        <div class="upload-preview hidden" id="uploadPreviewDelegate">
+          <img id="previewImgDelegate" src="" alt="미리보기" />
+          <button class="btn-change-photo" id="btnChangePhotoDelegate">사진 변경</button>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">이름 <span class="required-mark">*</span></label>
+          <input type="text" id="delegateName" class="form-input" placeholder="예: 보리, 민준, Mom" maxlength="12" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">날짜 <span class="optional-mark">(선택)</span></label>
+          <input type="text" id="delegateDate" class="form-input" placeholder="YYYY.MM.DD" maxlength="10" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">원하는 스타일 <span class="optional-mark">(선택)</span></label>
+          <select id="delegateStyle" class="form-input form-select">
+            <option value="">스타일을 선택해주세요 (선택사항)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">요청사항 <span class="optional-mark">(선택)</span></label>
+          <textarea id="delegateRequest" class="form-textarea" placeholder="원하시는 스타일, 색상, 분위기 등을 자유롭게 적어주세요" rows="4" maxlength="200"></textarea>
+        </div>
+      </div>
+
+      <button class="btn-primary full-width" id="btnDelegateSubmit">
+        🎁 맡기기 신청하기
+      </button>
+    </section>
+
+    <!-- ============= SCREEN: COMPLETE ============= -->
+    <section class="screen" id="screenComplete">
+      <div class="complete-wrap">
+        <div class="complete-anim">
+          <div class="complete-circle">
+            <span class="complete-icon">🎁</span>
+          </div>
+        </div>
+        <h2 class="complete-title">신청이 완료됐어요!</h2>
+        <p class="complete-desc">주문번호: <strong id="orderIdDisplay"></strong></p>
+        <p class="complete-sub">제작이 시작되면 카카오톡으로<br/>안내드릴게요 🙂</p>
+
+        <div class="complete-timeline">
+          <div class="tl-item active">
+            <div class="tl-dot"></div>
+            <div class="tl-content"><strong>접수 완료</strong><span>시안 및 정보 검토 중</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content"><strong>제작 확정</strong><span>재료 준비 및 제작 시작</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content"><strong>배송 출발</strong><span>택배로 발송</span></div>
+          </div>
+        </div>
+
+        <button class="btn-secondary full-width" id="btnNewOrder">새 주문 시작하기</button>
+      </div>
+    </section>
+
+    <!-- ============= SCREEN: ADMIN ============= -->
+    <section class="screen" id="screenAdmin">
+      <div class="admin-header">
+        <h2 class="admin-title">🛠 관리자 모드</h2>
+        <div class="admin-stats" id="adminStats"></div>
+      </div>
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="orders">주문 목록</button>
+        <button class="admin-tab" data-tab="stats">통계</button>
+      </div>
+      <div class="admin-tab-content" id="adminTabOrders">
+        <div class="order-filters">
+          <button class="filter-btn active" data-status="all">전체</button>
+          <button class="filter-btn" data-status="접수완료">접수</button>
+          <button class="filter-btn" data-status="제작가능">제작가능</button>
+          <button class="filter-btn" data-status="제작중">제작중</button>
+          <button class="filter-btn" data-status="발송완료">발송완료</button>
+        </div>
+        <div class="order-list" id="adminOrderList">
+          <p class="empty-msg">접수된 주문이 없습니다</p>
+        </div>
+      </div>
+      <div class="admin-tab-content hidden" id="adminTabStats">
+        <div class="stats-grid" id="statsGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============= MODAL: 주문 상세 ============= -->
+    <div class="modal-backdrop hidden" id="modalBackdrop">
+      <div class="modal-sheet" id="modalSheet">
+        <div class="modal-handle"></div>
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">주문 상세</h3>
+          <button class="modal-close" id="modalClose">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+
+    <!-- ============= MODAL: 관리자 로그인 ============= -->
+    <div class="modal-backdrop hidden" id="adminLoginBackdrop">
+      <div class="modal-sheet small-modal">
+        <div class="modal-handle"></div>
+        <div class="modal-header">
+          <h3 class="modal-title">관리자 로그인</h3>
+          <button class="modal-close" id="adminLoginClose">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">비밀번호</label>
+            <input type="password" id="adminPassword" class="form-input" placeholder="비밀번호를 입력하세요" />
+          </div>
+          <div class="field-error hidden" id="adminPasswordError">비밀번호가 틀렸습니다</div>
+          <button class="btn-primary full-width" id="btnAdminLogin" style="margin-top:1rem;">로그인</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
